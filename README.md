@@ -6,7 +6,7 @@
 <p align="center">By <strong>Ashsmith Khayrul</strong></p>
 
 <p align="center">
-  A discord.js v14 bot built on commission during high school. Features a fully functional ticket system, suggestions system, and review system — built for any Discord server that sells products or services.
+  A discord.js v14 bot built on commission during high school. Features a fully functional ticket system, suggestions system, and review system, built for any Discord server that sells products or services.
 </p>
 
 <p align="center">
@@ -39,4 +39,4 @@
 
 ## Hosting
 
-Want to keep your bot online 24/7? Check out **[Uniplex Host](https://uniplex.xyz)** — starting at just **$1.80/month**. Feel free to open a ticket if you need help with setup.
+Want to keep your bot online 24/7? Check out **[Uniplex Host](https://uniplex.xyz)**, starting at just **$1.80/month**. Feel free to open a ticket if you need help with setup.
