@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Remove a user from the ticket channel')
     .addUserOption(option => option.setName('user').setDescription('User').setRequired(true)),
   async execute(interaction, client) {
-    const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+    const allowedRoles = client.config.command_center.allowed_ticket_roles;
     const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
     if (!hasPermission) {
@@ -34,7 +34,7 @@ module.exports = {
         const alertChannel = interaction.guild.channels.cache.get(client.config.order_config.alert_channel_id);
         if (alertChannel) {
           const embed = new EmbedBuilder()
-            .setColor(client.config.server_config.danger_colour)
+            .setColor(client.config.server_config.danger_color)
             .setTitle('User Removed from Ticket')
             .setDescription(`User <@${user.id}> has been removed from the ticket in ${channel.name}`)
             .addFields(

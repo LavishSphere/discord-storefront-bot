@@ -51,7 +51,7 @@ module.exports = {
         { name: 'Which staff helped you?', value: `<@${staffMember.id}>`, inline: false },
         { name: 'Commentary:', value: commentary, inline: false }
       )
-      .setColor(client.config.server_config.accent_colour)
+      .setColor(client.config.server_config.accent_color)
       .setTimestamp();
 
     await vouchChannel.send({ embeds: [reviewEmbed] });

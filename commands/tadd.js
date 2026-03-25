@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Add a user to the ticket with specific permissions')
     .addUserOption(option => option.setName('user').setDescription('User').setRequired(true)),
   async execute(interaction, client) {
-    const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+    const allowedRoles = client.config.command_center.allowed_ticket_roles;
     const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
     if (!hasPermission) {
@@ -33,7 +33,7 @@ module.exports = {
       const alertChannel = guild.channels.cache.get(client.config.order_config.alert_channel_id);
       if (alertChannel) {
         const embed = new EmbedBuilder()
-          .setColor(client.config.server_config.success_colour)
+          .setColor(client.config.server_config.success_color)
           .setTitle('User Added to Ticket')
           .setDescription(`User <@${user.id}> has been added to the ticket in ${channel.name}`)
           .addFields(

@@ -10,7 +10,7 @@ module.exports = {
       option.setName('name').setDescription('New name for the ticket channel').setRequired(true)),
   async execute(interaction, client) {
     try {
-      const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+      const allowedRoles = client.config.command_center.allowed_ticket_roles;
       const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
       if (!hasPermission) {

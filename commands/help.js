@@ -25,7 +25,7 @@ module.exports = {
         name: `Help Command for ${client.user.tag}!`,
         iconURL: interaction.user.displayAvatarURL({ dynamic: true })
       })
-      .setColor(client.config.server_config.embed_colours)
+      .setColor(client.config.server_config.embed_colors)
       .setFooter({
         text: client.config.server_config.copyright,
         iconURL: client.config.server_config.server_icon

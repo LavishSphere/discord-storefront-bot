@@ -71,7 +71,7 @@ function updateActivityAndPresence() {
 async function sendTranscriptToUser(user, transcriptAttachment, guild, interaction, formattedTimestamp) {
   try {
     const embed = new EmbedBuilder()
-      .setColor(client.config.server_config.success_colour)
+      .setColor(client.config.server_config.success_color)
       .setTitle('Ticket Closed')
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setDescription('Please consider leaving a review in our vouch channel using /review of our services!')
@@ -92,14 +92,14 @@ async function handleCloseTicketButton(interaction, client) {
 
   const guild = interaction.guild;
   const channel = interaction.channel;
-  const validPrefixes = ['enquiry-', 'purchase-', 'support-'];
+  const validPrefixes = ['inquiry-', 'purchase-', 'support-'];
   const isTicketChannel = validPrefixes.some(prefix => channel.name.startsWith(prefix));
 
   if (!isTicketChannel) {
     return interaction.editReply({ content: 'This button can only be used in ticket channels.', ephemeral: true });
   }
 
-  const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+  const allowedRoles = client.config.command_center.allowed_ticket_roles;
   const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
   if (!hasPermission) {
@@ -111,7 +111,7 @@ async function handleCloseTicketButton(interaction, client) {
 
   const confirmationEmbed = new EmbedBuilder()
     .setAuthor({ name: 'Ticket Closing', iconURL: client.user.displayAvatarURL() })
-    .setColor(client.config.server_config.embed_colours)
+    .setColor(client.config.server_config.embed_colors)
     .setDescription('This ticket channel will be deleted in 5 seconds.')
     .setFooter({ text: client.config.server_config.copyright, iconURL: client.config.server_config.server_icon });
 
@@ -125,7 +125,7 @@ async function handleCloseTicketButton(interaction, client) {
       const targetChannel = guild.channels.cache.get(targetChannelID);
       if (targetChannel) {
         const embed = new EmbedBuilder()
-          .setColor(client.config.server_config.success_colour)
+          .setColor(client.config.server_config.success_color)
           .setTitle('Ticket Closed')
           .setDescription(`Ticket closed in ${channel.name}`)
           .addFields(
@@ -152,7 +152,7 @@ async function handleCloseTicketButton(interaction, client) {
 }
 
 async function handleClaimTicketButton(interaction, client) {
-  const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+  const allowedRoles = client.config.command_center.allowed_ticket_roles;
   const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
   if (!hasPermission) {
@@ -208,7 +208,7 @@ client.on('interactionCreate', async interaction => {
       const record = rows[0];
       let upvotes = JSON.parse(record.upvotes);
       let downvotes = JSON.parse(record.downvotes);
-      const hasRole = interaction.member.roles.cache.has(client.config.command_centre.suggestion_manage_role_id);
+      const hasRole = interaction.member.roles.cache.has(client.config.command_center.suggestion_manage_role_id);
       const embed = new EmbedBuilder(interaction.message.embeds[0]);
 
       switch (interaction.customId) {
@@ -342,14 +342,14 @@ client.on('interactionCreate', async (interaction) => {
         new ActionRowBuilder().addComponents(supportInput),
         new ActionRowBuilder().addComponents(foundUsInput)
       );
-    } else if (selected === 'enquiry_ticket') {
+    } else if (selected === 'inquiry_ticket') {
       modal = new ModalBuilder()
-        .setCustomId('enquiry-ticket-modal')
-        .setTitle('Enquiry Ticket');
+        .setCustomId('inquiry-ticket-modal')
+        .setTitle('Inquiry Ticket');
 
-      const enquiryInput = new TextInputBuilder()
-        .setCustomId('enquiry_input')
-        .setLabel('What Is Your Enquiry About?')
+      const inquiryInput = new TextInputBuilder()
+        .setCustomId('inquiry_input')
+        .setLabel('What Is Your Inquiry About?')
         .setStyle(TextInputStyle.Short);
 
       const foundUsInput = new TextInputBuilder()
@@ -358,7 +358,7 @@ client.on('interactionCreate', async (interaction) => {
         .setStyle(TextInputStyle.Short);
 
       modal.addComponents(
-        new ActionRowBuilder().addComponents(enquiryInput),
+        new ActionRowBuilder().addComponents(inquiryInput),
         new ActionRowBuilder().addComponents(foundUsInput)
       );
     }
@@ -375,8 +375,8 @@ client.on('interactionCreate', async (interaction) => {
     const supportResponse = selected === 'support'
       ? interaction.fields.getTextInputValue('support_input')
       : null;
-    const enquiryResponse = selected === 'enquiry'
-      ? interaction.fields.getTextInputValue('enquiry_input')
+    const inquiryResponse = selected === 'inquiry'
+      ? interaction.fields.getTextInputValue('inquiry_input')
       : null;
 
     pool.query('INSERT INTO orders (order_number) VALUES (0)', async (error, results) => {
@@ -390,7 +390,7 @@ client.on('interactionCreate', async (interaction) => {
 
       if (selected === 'purchase') categoryID = client.config.order_config.purchase_category_id;
       else if (selected === 'support') categoryID = client.config.order_config.support_category_id;
-      else categoryID = client.config.order_config.enquiry_category_id;
+      else categoryID = client.config.order_config.inquiry_category_id;
 
       const guild = client.guilds.cache.get(client.config.server_config.guild_id);
       const ticketChannel = await guild.channels.create({
@@ -407,7 +407,7 @@ client.on('interactionCreate', async (interaction) => {
             id: interaction.user.id,
             allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages],
           },
-          ...client.config.command_centre.allowed_ticket_roles.map(roleId => ({
+          ...client.config.command_center.allowed_ticket_roles.map(roleId => ({
             id: roleId,
             allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages],
           })),
@@ -419,9 +419,9 @@ client.on('interactionCreate', async (interaction) => {
           name: 'Ticket Created! ✅',
           iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
         })
-        .setColor(client.config.server_config.embed_colours)
+        .setColor(client.config.server_config.embed_colors)
         .setTimestamp()
-        .setDescription(`**Ticket Information**\n\n**User:** <@${interaction.user.id}>\n**Where Did You Find Us?**: ${foundUsResponse}${purchaseResponse ? `\n**What Would You Like to Purchase?**: ${purchaseResponse}` : ''}${supportResponse ? `\n**What Do You Require Support With?**: ${supportResponse}` : ''}${enquiryResponse ? `\n**What Is Your Enquiry About?**: ${enquiryResponse}` : ''}`)
+        .setDescription(`**Ticket Information**\n\n**User:** <@${interaction.user.id}>\n**Where Did You Find Us?**: ${foundUsResponse}${purchaseResponse ? `\n**What Would You Like to Purchase?**: ${purchaseResponse}` : ''}${supportResponse ? `\n**What Do You Require Support With?**: ${supportResponse}` : ''}${inquiryResponse ? `\n**What Is Your Inquiry About?**: ${inquiryResponse}` : ''}`)
         .setFooter({
           text: client.config.server_config.copyright,
           iconURL: client.config.server_config.footer_icon,
@@ -438,7 +438,7 @@ client.on('interactionCreate', async (interaction) => {
         .setStyle(ButtonStyle.Success);
 
       const row = new ActionRowBuilder().addComponents(closeButton, claimButton);
-      const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+      const allowedRoles = client.config.command_center.allowed_ticket_roles;
 
       ticketChannel.send({ content: `<@${interaction.user.id}> <@&${allowedRoles.join('> <@&')}>`, embeds: [orderEmbed], components: [row] });
 
@@ -450,9 +450,9 @@ client.on('interactionCreate', async (interaction) => {
           { name: 'Where Did You Find Us?', value: foundUsResponse },
           ...(purchaseResponse ? [{ name: 'What Would You Like to Purchase?', value: purchaseResponse }] : []),
           ...(supportResponse ? [{ name: 'What Do You Require Support With?', value: supportResponse }] : []),
-          ...(enquiryResponse ? [{ name: 'What Is Your Enquiry About?', value: enquiryResponse }] : [])
+          ...(inquiryResponse ? [{ name: 'What Is Your Inquiry About?', value: inquiryResponse }] : [])
         )
-        .setColor(client.config.server_config.embed_colours);
+        .setColor(client.config.server_config.embed_colors);
 
       const alertChannel = guild.channels.cache.get(client.config.order_config.alert_channel_id);
       alertChannel.send({ embeds: [ticketEmbed] });

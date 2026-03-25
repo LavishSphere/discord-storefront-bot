@@ -12,26 +12,40 @@
         "server_icon": "SERVER ICON LINK",
         "server_name": "SERVER NAME",
         "copyright": "© SERVER NAME",
-        "embed_colours": "EMBED COLOR HEX WITH # SIGN",
-        "success_colour": "#00ff00",
-        "warning_colour": "#ffcc00",
-        "danger_colour": "#ff0000",
-        "accent_colour": "#FFD700"
+        "embed_colors": "EMBED COLOR HEX WITH # SIGN",
+        "success_color": "#00ff00",
+        "warning_color": "#ffcc00",
+        "danger_color": "#ff0000",
+        "accent_color": "#FFD700"
     },
     "order_config": {
         "purchase_category_id": "PURCHASE CATEGORY ID",
         "support_category_id": "SUPPORT CATEGORY ID",
-        "enquiry_category_id": "ENQUIRY CATEGORY ID",
+        "inquiry_category_id": "INQUIRY CATEGORY ID",
         "alert_channel_id": "ALERT CHANNEL ID",
         "transcript_log_channel_id": "TRANSCRIPT LOG CHANNEL ID",
         "suggestions_channel_id": "SUGGESTIONS CHANNEL ID",
         "vouch_channel_id": "VOUCH CHANNEL ID"
     },
-    "command_centre": {
+    "command_center": {
         "allowed_ticket_roles": ["ROLE 1", "ROLE 2"],
         "suggestion_manage_role_id": "SUGGESTION MANAGE ROLE ID"
     },
     "paths_config": {
         "commands_path": "/home/container/commands"
+    },
+    "payment_config": {
+        "header": "Vinewood Visuals Payment Junction",
+        "bank": {
+            "name_on_card": "NAME",
+            "routing_label": "Routing Number",
+            "routing_number": "ROUTING NUMBER",
+            "account_number": "ACCOUNT NUMBER"
+        },
+        "paypal": {
+            "link": "https://paypal.me/X",
+            "qr_enabled": false,
+            "qr_image_url": ""
+        }
     }
 }

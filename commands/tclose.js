@@ -4,7 +4,7 @@ const discordTranscripts = require('discord-html-transcripts');
 async function sendTranscriptToUser(user, transcriptAttachment, guild, interaction, formattedTimestamp) {
   try {
     const embed = new EmbedBuilder()
-      .setColor(client.config.server_config.success_colour)
+      .setColor(client.config.server_config.success_color)
       .setTitle('Ticket Closed')
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setDescription('Please consider leaving a review in our vouch channel using /review of our services!')
@@ -28,14 +28,14 @@ module.exports = {
 
     const guild = interaction.guild;
     const channel = interaction.channel;
-    const validPrefixes = ['enquiry-', 'purchase-', 'support-'];
+    const validPrefixes = ['inquiry-', 'purchase-', 'support-'];
     const isTicketChannel = validPrefixes.some(prefix => channel.name.startsWith(prefix));
 
     if (!isTicketChannel) {
       return interaction.editReply({ content: 'This command can only be used in ticket channels.', ephemeral: true });
     }
 
-    const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+    const allowedRoles = client.config.command_center.allowed_ticket_roles;
     const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
     if (!hasPermission) {
@@ -53,7 +53,7 @@ module.exports = {
 
     const confirmationEmbed = new EmbedBuilder()
       .setAuthor({ name: 'Ticket Closing', iconURL: client.user.displayAvatarURL() })
-      .setColor(client.config.server_config.embed_colours)
+      .setColor(client.config.server_config.embed_colors)
       .setDescription('This ticket channel will be deleted in 5 seconds.')
       .setFooter({ text: client.config.server_config.copyright, iconURL: client.config.server_config.server_icon });
 
@@ -67,7 +67,7 @@ module.exports = {
         const targetChannel = interaction.guild.channels.cache.get(targetChannelID);
         if (targetChannel) {
           const embed = new EmbedBuilder()
-            .setColor(client.config.server_config.success_colour)
+            .setColor(client.config.server_config.success_color)
             .setTitle('Ticket Closed')
             .setDescription(`Ticket closed in ${channel.name}`)
             .addFields(

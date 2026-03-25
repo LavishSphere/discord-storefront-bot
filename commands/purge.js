@@ -15,7 +15,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 
   async execute(interaction, client) {
-    const allowedRoles = client.config["command_centre"].allowed_ticket_roles;
+    const allowedRoles = client.config["command_center"].allowed_ticket_roles;
     const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
     if (!hasPermission) {
@@ -31,7 +31,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor(client.config["server_config"].danger_colour)
+      .setColor(client.config["server_config"].danger_color)
       .setDescription(`Deleted **${deleted.size}** message(s).`);
 
     await interaction.reply({ embeds: [embed], ephemeral: true });

@@ -18,7 +18,7 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-      .setColor(client.config.server_config.accent_colour)
+      .setColor(client.config.server_config.accent_color)
       .setTitle('Suggestion')
       .setDescription(suggestion)
       .addFields(

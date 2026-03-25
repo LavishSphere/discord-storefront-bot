@@ -3,7 +3,7 @@ const discordTranscripts = require('discord-html-transcripts');
 
 async function logToChannel(channel, title, description, fields, transcriptAttachment = null) {
   const embed = new EmbedBuilder()
-    .setColor(client.config.server_config.success_colour)
+    .setColor(client.config.server_config.success_color)
     .setTitle(title)
     .setDescription(description)
     .addFields(fields)
@@ -15,7 +15,7 @@ async function logToChannel(channel, title, description, fields, transcriptAttac
 async function sendTranscriptToUser(user, transcriptAttachment, guild, interaction, formattedTimestamp) {
   try {
     const embed = new EmbedBuilder()
-      .setColor(client.config.server_config.success_colour)
+      .setColor(client.config.server_config.success_color)
       .setTitle('Ticket Closed')
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setDescription('Please consider leaving a review in our vouch channel using /review of our services!')
@@ -57,14 +57,14 @@ module.exports = {
       return interaction.reply({ content: 'Error: User not found.', ephemeral: true });
     }
 
-    const validPrefixes = ['enquiry-', 'purchase-', 'support-'];
+    const validPrefixes = ['inquiry-', 'purchase-', 'support-'];
     const isTicketChannel = validPrefixes.some(prefix => channel.name.startsWith(prefix));
 
     if (!isTicketChannel) {
       return interaction.editReply({ content: 'This command can only be used in ticket channels.', ephemeral: true });
     }
 
-    const allowedRoles = client.config.command_centre.allowed_ticket_roles;
+    const allowedRoles = client.config.command_center.allowed_ticket_roles;
     const hasPermission = interaction.member.roles.cache.some(role => allowedRoles.includes(role.id));
 
     if (!hasPermission) {
@@ -72,7 +72,7 @@ module.exports = {
     }
 
     const closeEmbed = new EmbedBuilder()
-      .setColor(client.config.server_config.warning_colour)
+      .setColor(client.config.server_config.warning_color)
       .setTitle('Close Request')
       .setDescription(`A request to close this ticket has been made.\n\n**Reason:** ${reason}\n**Auto-close** <t:${autoCloseTimestamp}:R>`)
       .setTimestamp();
@@ -127,7 +127,7 @@ module.exports = {
         );
 
         const closedEmbed = new EmbedBuilder()
-          .setColor(client.config.server_config.success_colour)
+          .setColor(client.config.server_config.success_color)
           .setTitle('Ticket Closed')
           .setDescription(`Ticket has been closed by <@${interaction.user.id}>.`)
           .setTimestamp();
@@ -150,7 +150,7 @@ module.exports = {
         );
 
         const autoClosedEmbed = new EmbedBuilder()
-          .setColor(client.config.server_config.success_colour)
+          .setColor(client.config.server_config.success_color)
           .setTitle('Ticket Auto-Closed')
           .setDescription(`Ticket has been auto-closed after ${time} hour(s).`)
           .setTimestamp();
