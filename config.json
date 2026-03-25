@@ -31,11 +31,23 @@
         "allowed_ticket_roles": ["ROLE 1", "ROLE 2"],
         "suggestion_manage_role_id": "SUGGESTION MANAGE ROLE ID"
     },
+    "welcome_config": {
+        "enabled": true,
+        "welcome_channel_id": "WELCOME CHANNEL ID",
+        "image_url": "",
+        "owners": "OWNER NAME",
+        "channels": {
+            "chat_channel_id": "CHAT CHANNEL ID",
+            "portfolio_channel_id": "PORTFOLIO CHANNEL ID",
+            "tickets_channel_id": "TICKETS CHANNEL ID",
+            "rules_channel_id": "RULES CHANNEL ID"
+        }
+    },
     "paths_config": {
         "commands_path": "/home/container/commands"
     },
     "payment_config": {
-        "header": "Vinewood Visuals Payment Junction",
+        "header": "TITLE FOR PAYMENT CONFIG",
         "bank": {
             "name_on_card": "NAME",
             "routing_label": "Routing Number",

@@ -472,4 +472,28 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
+client.on('guildMemberAdd', async (member) => {
+  const welcome = client.config.welcome_config;
+  if (!welcome.enabled) return;
+
+  const channel = member.guild.channels.cache.get(welcome.welcome_channel_id);
+  if (!channel) return;
+
+  const { chat_channel_id, portfolio_channel_id, tickets_channel_id, rules_channel_id } = welcome.channels;
+  const embed = new EmbedBuilder()
+    .setColor(client.config.server_config.embed_colors)
+    .setAuthor({ name: `${member.user.username} has joined the server!`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
+    .setDescription(
+      `Welcome to **${member.guild.name}**! We're pleased to have you here. Feel free to introduce yourself in <#${chat_channel_id}>.\n\n` +
+      `🎨 If you're here for custom graphic design, head over to <#${portfolio_channel_id}> to check our prices and preview our previous work.\n\n` +
+      `💵 If you feel ready to order, head over to <#${tickets_channel_id}> to prompt a ticket to open.\n\n` +
+      `📜 Read the Rules: Be sure to familiarize yourself with our community guidelines in the <#${rules_channel_id}> channel.\n\n` +
+      `From,\n${welcome.owners}`
+    );
+
+  if (welcome.image_url) embed.setImage(welcome.image_url);
+
+  await channel.send({ embeds: [embed] });
+});
+
 client.login(process.env.BOT_TOKEN);

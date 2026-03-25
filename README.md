@@ -6,7 +6,7 @@
 <p align="center">By <strong>Ashsmith Khayrul</strong></p>
 
 <p align="center">
-  A discord.js v14 bot built on commission during high school. Features a fully functional ticket system, suggestions system, review system, moderation tools, and payment display, built for any Discord server that sells products or services.
+  A discord.js v14 bot built on commission during high school. Features a fully functional ticket system, suggestions system, review system, moderation tools, payment display, and customizable welcome messages, built for any Discord server that sells products or services.
 </p>
 
 <p align="center">
@@ -26,6 +26,7 @@
 - **Review System** - Collect and display product/service reviews
 - **Purge Command** - Bulk delete up to 100 messages from any channel
 - **Bank Details Command** - Display payment info (bank transfer and PayPal) in a clean embed
+- **Welcome System** - Automatically greet new members with a customizable embed
 
 ---
 
