@@ -31,7 +31,7 @@ module.exports = {
       .then(async () => {
         await interaction.reply({ content: `Successfully removed user with ID ${userID} from this channel.`, ephemeral: true });
 
-        const alertChannel = interaction.guild.channels.cache.get(client.config.order_config.alert_channel_id);
+        const alertChannel = interaction.guild.channels.cache.get(client.config.ticket_config.alert_channel_id);
         if (alertChannel) {
           const embed = new EmbedBuilder()
             .setColor(client.config.server_config.danger_color)

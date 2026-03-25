@@ -36,7 +36,7 @@ module.exports = {
       return interaction.reply({ content: 'Stars must be an integer from 1 to 5.', ephemeral: true });
     }
 
-    const vouchChannel = interaction.guild.channels.cache.get(client.config.order_config.vouch_channel_id);
+    const vouchChannel = interaction.guild.channels.cache.get(client.config.ticket_config.vouch_channel_id);
     if (!vouchChannel) {
       return interaction.reply({ content: 'Vouch channel not found.', ephemeral: true });
     }

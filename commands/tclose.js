@@ -42,8 +42,8 @@ module.exports = {
       return interaction.editReply({ content: 'You do not have permission to use this command.', ephemeral: true });
     }
 
-    if (channel.parentId !== client.config.order_config.purchase_category_id) {
-      await channel.setParent(client.config.order_config.purchase_category_id);
+    if (channel.parentId !== client.config.ticket_config.purchase_category_id) {
+      await channel.setParent(client.config.ticket_config.purchase_category_id);
     }
 
     await guild.members.fetch();
@@ -62,7 +62,7 @@ module.exports = {
       const firstMessageTimestamp = firstMessage.first()?.createdTimestamp || Date.now();
       const formattedTimestamp = `<t:${Math.floor(firstMessageTimestamp / 1000)}:F>`;
 
-      const targetChannelID = client.config.order_config.transcript_log_channel_id;
+      const targetChannelID = client.config.ticket_config.transcript_log_channel_id;
       if (targetChannelID) {
         const targetChannel = interaction.guild.channels.cache.get(targetChannelID);
         if (targetChannel) {

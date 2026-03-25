@@ -30,7 +30,7 @@ module.exports = {
 
       await interaction.reply({ content: `${user.tag} has been added to the ticket.`, ephemeral: true });
 
-      const alertChannel = guild.channels.cache.get(client.config.order_config.alert_channel_id);
+      const alertChannel = guild.channels.cache.get(client.config.ticket_config.alert_channel_id);
       if (alertChannel) {
         const embed = new EmbedBuilder()
           .setColor(client.config.server_config.success_color)

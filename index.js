@@ -120,7 +120,7 @@ async function handleCloseTicketButton(interaction, client) {
     const firstMessageTimestamp = firstMessage.first()?.createdTimestamp || Date.now();
     const formattedTimestamp = `<t:${Math.floor(firstMessageTimestamp / 1000)}:F>`;
 
-    const targetChannelID = client.config.order_config.transcript_log_channel_id;
+    const targetChannelID = client.config.ticket_config.transcript_log_channel_id;
     if (targetChannelID) {
       const targetChannel = guild.channels.cache.get(targetChannelID);
       if (targetChannel) {
@@ -186,6 +186,42 @@ client.once('ready', async () => {
       { body: commandsData }
     );
   } catch (error) {
+  }
+
+  const panelChannelId = client.config.ticket_config.ticket_channel_id;
+  if (panelChannelId) {
+    const panelChannel = client.channels.cache.get(panelChannelId);
+    if (panelChannel) {
+      const messages = await panelChannel.messages.fetch({ limit: 50 });
+      const existing = messages.find(m =>
+        m.author.id === client.user.id &&
+        m.components?.[0]?.components?.[0]?.customId === 'ticket-select'
+      );
+
+      if (!existing) {
+        const embed = new EmbedBuilder()
+          .setColor(client.config.server_config.embed_colors)
+          .setTitle('🎫 Ticket Panel')
+          .setDescription('Please select the type of ticket you would like to open:');
+
+        const row = new ActionRowBuilder()
+          .addComponents(
+            new SelectMenuBuilder()
+              .setCustomId('ticket-select')
+              .setPlaceholder('Select Ticket Type')
+              .addOptions([
+                { label: 'Purchase Ticket', description: 'Open a purchase-related ticket.', value: 'purchase_ticket' },
+                { label: 'Support Ticket', description: 'Open a support-related ticket.', value: 'support_ticket' },
+                { label: 'Inquiry Ticket', description: 'Open a general inquiry ticket.', value: 'inquiry_ticket' },
+              ])
+          );
+
+        await panelChannel.send({ embeds: [embed], components: [row] });
+        console.log('\x1b[32mTicket panel posted.\x1b[0m');
+      } else {
+        console.log('\x1b[33mTicket panel already exists, skipping.\x1b[0m');
+      }
+    }
   }
 });
 
@@ -388,9 +424,9 @@ client.on('interactionCreate', async (interaction) => {
       const orderId = results.insertId;
       let categoryID = '';
 
-      if (selected === 'purchase') categoryID = client.config.order_config.purchase_category_id;
-      else if (selected === 'support') categoryID = client.config.order_config.support_category_id;
-      else categoryID = client.config.order_config.inquiry_category_id;
+      if (selected === 'purchase') categoryID = client.config.ticket_config.purchase_category_id;
+      else if (selected === 'support') categoryID = client.config.ticket_config.support_category_id;
+      else categoryID = client.config.ticket_config.inquiry_category_id;
 
       const guild = client.guilds.cache.get(client.config.server_config.guild_id);
       const ticketChannel = await guild.channels.create({
@@ -454,7 +490,7 @@ client.on('interactionCreate', async (interaction) => {
         )
         .setColor(client.config.server_config.embed_colors);
 
-      const alertChannel = guild.channels.cache.get(client.config.order_config.alert_channel_id);
+      const alertChannel = guild.channels.cache.get(client.config.ticket_config.alert_channel_id);
       alertChannel.send({ embeds: [ticketEmbed] });
 
       await interaction.reply({ content: `Your ${selected.replace('_', ' ')} ticket has been created: <#${ticketChannel.id}>`, ephemeral: true });
@@ -479,14 +515,15 @@ client.on('guildMemberAdd', async (member) => {
   const channel = member.guild.channels.cache.get(welcome.welcome_channel_id);
   if (!channel) return;
 
-  const { chat_channel_id, portfolio_channel_id, tickets_channel_id, rules_channel_id } = welcome.channels;
+  const { chat_channel_id, portfolio_channel_id, rules_channel_id } = welcome.channels;
+  const ticket_channel_id = client.config.ticket_config.ticket_channel_id;
   const embed = new EmbedBuilder()
     .setColor(client.config.server_config.embed_colors)
     .setAuthor({ name: `${member.user.username} has joined the server!`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
     .setDescription(
       `Welcome to **${member.guild.name}**! We're pleased to have you here. Feel free to introduce yourself in <#${chat_channel_id}>.\n\n` +
       `🎨 If you're here for custom graphic design, head over to <#${portfolio_channel_id}> to check our prices and preview our previous work.\n\n` +
-      `💵 If you feel ready to order, head over to <#${tickets_channel_id}> to prompt a ticket to open.\n\n` +
+      `💵 If you feel ready to order, head over to <#${ticket_channel_id}> to prompt a ticket to open.\n\n` +
       `📜 Read the Rules: Be sure to familiarize yourself with our community guidelines in the <#${rules_channel_id}> channel.\n\n` +
       `From,\n${welcome.owners}`
     );

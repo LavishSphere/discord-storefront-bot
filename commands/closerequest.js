@@ -103,7 +103,7 @@ module.exports = {
     });
 
     collector.on('end', async (_, reasonEnd) => {
-      const targetChannelID = client.config.order_config.transcript_log_channel_id;
+      const targetChannelID = client.config.ticket_config.transcript_log_channel_id;
       const targetChannel = guild.channels.cache.get(targetChannelID);
 
       const firstMessage = await channel.messages.fetch({ limit: 1 });

@@ -10,7 +10,7 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction, client) {
     const suggestion = interaction.options.getString('suggestion');
-    const suggestionsChannel = interaction.guild.channels.cache.get(client.config.order_config.suggestions_channel_id);
+    const suggestionsChannel = interaction.guild.channels.cache.get(client.config.ticket_config.suggestions_channel_id);
 
     if (!suggestionsChannel) {
       return interaction.reply({ content: 'Suggestions channel not found.', ephemeral: true });

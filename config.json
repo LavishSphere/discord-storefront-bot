@@ -18,10 +18,11 @@
         "danger_color": "#ff0000",
         "accent_color": "#FFD700"
     },
-    "order_config": {
+    "ticket_config": {
         "purchase_category_id": "PURCHASE CATEGORY ID",
         "support_category_id": "SUPPORT CATEGORY ID",
         "inquiry_category_id": "INQUIRY CATEGORY ID",
+        "ticket_channel_id": "TICKETS CHANNEL ID",
         "alert_channel_id": "ALERT CHANNEL ID",
         "transcript_log_channel_id": "TRANSCRIPT LOG CHANNEL ID",
         "suggestions_channel_id": "SUGGESTIONS CHANNEL ID",
@@ -39,7 +40,6 @@
         "channels": {
             "chat_channel_id": "CHAT CHANNEL ID",
             "portfolio_channel_id": "PORTFOLIO CHANNEL ID",
-            "tickets_channel_id": "TICKETS CHANNEL ID",
             "rules_channel_id": "RULES CHANNEL ID"
         }
     },
