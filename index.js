@@ -1,4 +1,4 @@
-const { Client, Collection, ActionRowBuilder, ActivityType, ButtonBuilder, EmbedBuilder, ButtonStyle, GatewayIntentBits, Partials, Colors, ModalBuilder, TextInputBuilder, TextInputStyle, ChannelType, PermissionFlagsBits } = require('discord.js');
+const { Client, Collection, ActionRowBuilder, ActivityType, ButtonBuilder, EmbedBuilder, ButtonStyle, GatewayIntentBits, Partials, Colors, ModalBuilder, TextInputBuilder, TextInputStyle, ChannelType, PermissionFlagsBits, SelectMenuBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 const discordTranscripts = require('discord-html-transcripts');
